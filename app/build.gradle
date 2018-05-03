@@ -9,7 +9,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        buildConfigField "String" , "TestString" ,  "\"$TestString\""
+        buildConfigField "String" , "MovieDBAPIKey" ,  "\"$MovieDBAPIKey\""
     }
     buildTypes {
         release {
