@@ -17,16 +17,16 @@ import java.util.Scanner;
 public class NetworkUtils {
 
     final private static String MOVIEDB_API_BASE_URI =
-            "http://api.themoviedb.org/3/movie/popular?sort_by=popularity.desc&api_key=2dc2aabd3659e1e1e1c0ebdcd2013082";
+            "http://api.themoviedb.org/3/movie/";
     final private static String PARAM_API_KEY = "api_key";
     final private static String API_KEY = BuildConfig.MovieDBAPIKey;
-    final private static String PARAM_SORT = "sort_by";
-    final private static String SORT_BY = "popularity.desc";
+    private static String SUBDIRECTORY  = "popular";
 
-    public static URL buildUrl() {
+    public static URL buildUrl(String sort) {
+        SUBDIRECTORY = sort;
         Uri builtUri = Uri.parse(MOVIEDB_API_BASE_URI).buildUpon()
+                .appendPath(SUBDIRECTORY)
                 .appendQueryParameter(PARAM_API_KEY, API_KEY)
-                .appendQueryParameter(PARAM_SORT, SORT_BY)
                 .build();
 
         URL url = null;

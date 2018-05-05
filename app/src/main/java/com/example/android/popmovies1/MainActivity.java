@@ -4,6 +4,9 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.GridView;
 import android.widget.ProgressBar;
@@ -31,13 +34,13 @@ public class MainActivity extends AppCompatActivity {
        // mResponseView = (TextView) findViewById(R.id.responseView);
        // mErrorMessage = (TextView) findViewById(R.id.errorMessage);
        Log.d("myTag", "ApplicationStarted");
-       getMovies();
+       getMovies("popular");
 
 
     }
 
-    private void getMovies() {
-        URL movieURL = NetworkUtils.buildUrl();
+    private void getMovies(String sort) {
+        URL movieURL = NetworkUtils.buildUrl(sort);
         new GetPopularMoviesTask().execute(movieURL);
     }
 
@@ -92,5 +95,32 @@ public class MainActivity extends AppCompatActivity {
        // mErrorMessage.setVisibility(View.INVISIBLE);
         // Then, show the error
         //mResponseView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        /* Use AppCompatActivity's method getMenuInflater to get a handle on the menu inflater */
+        MenuInflater inflater = getMenuInflater();
+        /* Use the inflater's inflate method to inflate our menu layout to this menu */
+        inflater.inflate(R.menu.sort, menu);
+        /* Return true so that the menu is displayed in the Toolbar */
+        return true;
+    }
+
+    // COMPLETED (7) Override onOptionsItemSelected to handle clicks on the refresh button
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_sortpopular) {
+            getMovies("popular");
+            return true;
+        }
+        if (id == R.id.action_sortrating) {
+            getMovies("top_rated");
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
