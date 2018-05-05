@@ -5,7 +5,11 @@
     android:layout_height="match_parent"
     android:gravity="center"
     >
-
+    <ImageView
+        android:id="@+id/imageview_movie_poster"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"/>
     <TextView
         android:id="@+id/textview_movie_title"
         android:layout_width="wrap_content"

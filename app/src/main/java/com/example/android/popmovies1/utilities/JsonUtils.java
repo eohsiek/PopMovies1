@@ -16,6 +16,7 @@ public class JsonUtils {
             Movie movie = new Movie();
             JSONObject movieJson = new JSONObject(json);
             movie.setTitle(movieJson.optString("title"));
+            movie.setPoster_path(movieJson.optString("poster_path"));
             return movie;
         } catch (JSONException e) {
             throw new RuntimeException(e);

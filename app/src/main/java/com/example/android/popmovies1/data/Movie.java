@@ -18,6 +18,11 @@ public class Movie {
     private float vote_average;
     private float vote_count;
 
+    public String getPosterURI(){
+        String posterURI = "http://image.tmdb.org/t/p/w185" + this.poster_path;
+        String message = posterURI;
+        return posterURI;
+    }
 
     // Getter Methods
 
