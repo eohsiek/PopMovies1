@@ -5,9 +5,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.GridView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.android.popmovies1.data.Movie;
+import com.example.android.popmovies1.data.MoviesAdapter;
+import com.example.android.popmovies1.utilities.JsonUtils;
 import com.example.android.popmovies1.utilities.NetworkUtils;
 
 import java.io.IOException;
@@ -23,11 +27,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mLoadingIndicator = (ProgressBar) findViewById(R.id.progressBar);
-        mResponseView = (TextView) findViewById(R.id.responseView);
-        mErrorMessage = (TextView) findViewById(R.id.errorMessage);
-        Log.d("myTag", "ApplicationStarted");
-        getMovies();
+       // mLoadingIndicator = (ProgressBar) findViewById(R.id.progressBar);
+       // mResponseView = (TextView) findViewById(R.id.responseView);
+       // mErrorMessage = (TextView) findViewById(R.id.errorMessage);
+       Log.d("myTag", "ApplicationStarted");
+       getMovies();
+
+
     }
 
     private void getMovies() {
@@ -39,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
         protected void onPreExecute() {
             super.onPreExecute();
-            mLoadingIndicator.setVisibility(View.VISIBLE);
+           // mLoadingIndicator.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -57,11 +63,12 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String movieResults) {
             // COMPLETED (27) As soon as the loading is complete, hide the loading indicator
-            mLoadingIndicator.setVisibility(View.INVISIBLE);
+            //mLoadingIndicator.setVisibility(View.INVISIBLE);
             if (movieResults != null && !movieResults.equals("")) {
                 // COMPLETED (17) Call showJsonDataView if we have valid, non-null results
-                showJsonDataView();
-                mResponseView.setText(movieResults);
+                Movie[] movies = JsonUtils.parseMovieJson(movieResults);
+                showJsonDataView(movies);
+
             } else {
                 // COMPLETED (16) Call showErrorMessage if the result is null in onPostExecute
                 showErrorMessage();
@@ -70,17 +77,20 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void showJsonDataView() {
+    private  void showJsonDataView(Movie[] movies) {
         // First, make sure the error is invisible
-        mErrorMessage.setVisibility(View.INVISIBLE);
+       // mErrorMessage.setVisibility(View.INVISIBLE);
         // Then, make sure the JSON data is visible
-        mResponseView.setVisibility(View.VISIBLE);
+        //mResponseView.setVisibility(View.VISIBLE);
+        GridView gridView = findViewById(R.id.gridview);
+        MoviesAdapter moviesAdapter = new MoviesAdapter(this, movies);
+        gridView.setAdapter(moviesAdapter);
     }
 
-    private void showErrorMessage() {
+    private  void showErrorMessage() {
         // First, hide the currently visible data
-        mErrorMessage.setVisibility(View.INVISIBLE);
+       // mErrorMessage.setVisibility(View.INVISIBLE);
         // Then, show the error
-        mResponseView.setVisibility(View.VISIBLE);
+        //mResponseView.setVisibility(View.VISIBLE);
     }
 }

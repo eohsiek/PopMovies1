@@ -16,12 +16,12 @@ import java.util.Scanner;
 
 public class NetworkUtils {
 
-    final static String MOVIEDB_API_BASE_URI =
+    final private static String MOVIEDB_API_BASE_URI =
             "http://api.themoviedb.org/3/movie/popular?sort_by=popularity.desc&api_key=2dc2aabd3659e1e1e1c0ebdcd2013082";
-    final static String PARAM_API_KEY = "api_key";
-    final static String API_KEY = BuildConfig.MovieDBAPIKey;
-    final static String PARAM_SORT = "sort_by";
-    final static String SORT_BY = "popularity.desc";
+    final private static String PARAM_API_KEY = "api_key";
+    final private static String API_KEY = BuildConfig.MovieDBAPIKey;
+    final private static String PARAM_SORT = "sort_by";
+    final private static String SORT_BY = "popularity.desc";
 
     public static URL buildUrl() {
         Uri builtUri = Uri.parse(MOVIEDB_API_BASE_URI).buildUpon()
@@ -43,7 +43,7 @@ public class NetworkUtils {
     public static String getResponseFromHttpUrl(URL url) throws IOException {
 
         try {
-            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();;
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
             try {
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
                 StringBuilder stringBuilder = new StringBuilder();
