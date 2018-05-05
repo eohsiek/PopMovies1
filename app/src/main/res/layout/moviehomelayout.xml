@@ -5,8 +5,8 @@
     android:gravity="center"    >
     <ImageView
         android:id="@+id/imageview_movie_poster"
-        android:layout_width="185dp"
+        android:layout_width="215dp"
         android:layout_height="300dp"
-        android:scaleType="fitCenter"/>
+        android:scaleType="fitXY"/>
 
 </LinearLayout>

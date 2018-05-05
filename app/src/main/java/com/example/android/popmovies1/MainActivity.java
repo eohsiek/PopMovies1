@@ -20,6 +20,9 @@ import com.example.android.popmovies1.utilities.NetworkUtils;
 import java.io.IOException;
 import java.net.URL;
 //https://www.iconfinder.com/icons/1055062/film_film_reel_movie_reel_icon#size=128
+//https://www.raywenderlich.com/127544/android-gridview-getting-started
+//http://ataulm.com/implementing-android-designs-on-wutson/
+
 public class MainActivity extends AppCompatActivity {
 
     private ProgressBar mLoadingIndicator;

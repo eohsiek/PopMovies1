@@ -15,8 +15,6 @@ import com.squareup.picasso.Picasso;
 public class MoviesAdapter extends BaseAdapter {
     private final Context mContext;
     private final Movie[] movies;
-    private static final float HEIGHT_BY_WIDTH_RATIO = 277f / 178;
-    private static final float HALF_PIXEL = 0.5f;
 
     public MoviesAdapter(Context context, Movie[] movies) {
         this.mContext = context;
