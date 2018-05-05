@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Popular Movies 1</string>
+    <string name="app_name">Popular Movies</string>
     <string name="error_message">There was an error.</string>
     <string name="sort_popular">Sort by Popularity</string>
     <string name="sort_rating">Sort by Rating</string>
