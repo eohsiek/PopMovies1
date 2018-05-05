@@ -15,6 +15,8 @@ import com.squareup.picasso.Picasso;
 public class MoviesAdapter extends BaseAdapter {
     private final Context mContext;
     private final Movie[] movies;
+    private static final float HEIGHT_BY_WIDTH_RATIO = 277f / 178;
+    private static final float HALF_PIXEL = 0.5f;
 
     public MoviesAdapter(Context context, Movie[] movies) {
         this.mContext = context;
@@ -49,12 +51,12 @@ public class MoviesAdapter extends BaseAdapter {
 
         // 3
 
-        final TextView titleTextView = convertView.findViewById(R.id.textview_movie_title);
+        //final TextView titleTextView = convertView.findViewById(R.id.textview_movie_title);
         final ImageView posterImageView = (ImageView)convertView.findViewById(R.id.imageview_movie_poster);
 
 
         // 4
-        titleTextView.setText(movie.getTitle());
+       // titleTextView.setText(movie.getTitle());
         Picasso.with(mContext).load(movie.getPosterURI()).into(posterImageView);
 
         return convertView;
