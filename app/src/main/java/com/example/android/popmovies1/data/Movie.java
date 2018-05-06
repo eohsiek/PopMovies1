@@ -1,15 +1,17 @@
 package com.example.android.popmovies1.data;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 
-public class Movie {
+public class Movie implements Parcelable {
     private float id;
     private String title;
     private float popularity;
     private String poster_path;
     private String original_language;
     private String original_title;
-    ArrayList<Object> genre_ids = new ArrayList<>();
     private String backdrop_path;
     private boolean adult;
     private String overview;
@@ -18,13 +20,88 @@ public class Movie {
     private float vote_average;
     private float vote_count;
 
+    public Movie (){
+
+    };
+
+    /*
+    public Movie(float id, String title, float popularity, String poster_path, String original_language,
+    String original_title, String backdrop_path, boolean adult, String overview, String release_date,
+    boolean video, float vote_average, float vote_count) {
+        this.id = id;
+        this.title = title;
+        this.popularity = popularity;
+        this.poster_path = poster_path;
+        this.original_language = original_language;
+        this.original_title = original_title;
+        this.backdrop_path = backdrop_path;
+        this.adult = adult;
+        this.overview = overview;
+        this.release_date = release_date;
+        this.video = video;
+        this.vote_average = vote_average;
+        this.vote_count = vote_count;
+    }
+    */
+
+    public Movie(Parcel parcel){
+        id = parcel.readFloat();
+        title = parcel.readString();
+        popularity = parcel.readFloat();
+        poster_path = parcel.readString();
+        original_language = parcel.readString();
+        original_title = parcel.readString();
+        backdrop_path = parcel.readString();
+        adult = (Boolean) parcel.readValue(null);
+        overview = parcel.readString();
+        release_date = parcel.readString();
+        video = (Boolean) parcel.readValue(null);
+        vote_average = parcel.readFloat();
+        vote_count = parcel.readFloat();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeFloat(id);
+        dest.writeString(title);
+        dest.writeFloat(popularity);
+        dest.writeString(poster_path);
+        dest.writeString(original_language);
+        dest.writeString(original_title);
+        dest.writeString(backdrop_path);
+        dest.writeValue(adult);
+        dest.writeString(overview);
+        dest.writeString(release_date);
+        dest.writeValue(video);
+        dest.writeFloat(vote_average);
+        dest.writeFloat(vote_count);
+    }
+
+    public static final Parcelable.Creator<Movie> CREATOR = new Parcelable.Creator<Movie>(){
+
+        @Override
+        public Movie createFromParcel(Parcel parcel) {
+            return new Movie(parcel);
+        }
+
+        @Override
+        public Movie[] newArray(int size) {
+            return new Movie[0];
+        }
+    };
+
+    // Getter Methods
+
     public String getPosterURI(){
         String posterURI = "http://image.tmdb.org/t/p/w185" + this.poster_path;
         String message = posterURI;
         return posterURI;
     }
-
-    // Getter Methods
 
     public float getVote_count() {
         return vote_count;
@@ -131,4 +208,6 @@ public class Movie {
     public void setRelease_date( String release_date ) {
         this.release_date = release_date;
     }
+
+
 }

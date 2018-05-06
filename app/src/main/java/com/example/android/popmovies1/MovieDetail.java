@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.example.android.popmovies1.data.Movie;
+
 public class MovieDetail extends AppCompatActivity {
     //public static String title;
 
@@ -13,7 +15,8 @@ public class MovieDetail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
         Intent intent = getIntent();
-        String title = intent.getStringExtra("title");
+        Movie movie = intent.getParcelableExtra("movie");
+        String title = movie.getPosterURI();
         TextView titleTextView = findViewById(R.id.textview_movie_title);
         titleTextView.setText(title);
     }

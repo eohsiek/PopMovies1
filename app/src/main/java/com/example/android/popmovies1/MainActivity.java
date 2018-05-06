@@ -97,15 +97,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView parent, View view, int position, long id) {
                 Movie movie = (Movie) moviesAdapter.getItem(position);
-                launchDetailActivity(position, movie.getTitle());
+                launchDetailActivity(position, movie);
             }
         });
     }
 
-    private void launchDetailActivity(int position, String title) {
+    private void launchDetailActivity(int position, Movie movie) {
         Intent intent = new Intent(this, MovieDetail.class);
-        Log.d("movietitle2", title);
-        intent.putExtra("title", title);
+        intent.putExtra("movie", movie);
         startActivity(intent);
     }
 
