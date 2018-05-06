@@ -1,5 +1,6 @@
 package com.example.android.popmovies1;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -21,7 +23,6 @@ import java.io.IOException;
 import java.net.URL;
 //https://www.iconfinder.com/icons/1055062/film_film_reel_movie_reel_icon#size=128
 //https://www.raywenderlich.com/127544/android-gridview-getting-started
-//http://ataulm.com/implementing-android-designs-on-wutson/
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
        // mErrorMessage = (TextView) findViewById(R.id.errorMessage);
        Log.d("myTag", "ApplicationStarted");
        getMovies("popular");
+
+
 
 
     }
@@ -91,6 +94,18 @@ public class MainActivity extends AppCompatActivity {
         GridView gridView = findViewById(R.id.gridview);
         MoviesAdapter moviesAdapter = new MoviesAdapter(this, movies);
         gridView.setAdapter(moviesAdapter);
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView parent, View view, int position, long id) {
+                launchDetailActivity(position);
+            }
+        });
+    }
+
+    private void launchDetailActivity(int position) {
+        Intent intent = new Intent(this, MovieDetail.class);
+        intent.putExtra(MovieDetail.EXTRA_POSITION, position);
+        startActivity(intent);
     }
 
     private  void showErrorMessage() {
