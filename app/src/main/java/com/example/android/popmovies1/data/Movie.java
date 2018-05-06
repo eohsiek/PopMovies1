@@ -24,7 +24,6 @@ public class Movie implements Parcelable {
 
     };
 
-    /*
     public Movie(float id, String title, float popularity, String poster_path, String original_language,
     String original_title, String backdrop_path, boolean adult, String overview, String release_date,
     boolean video, float vote_average, float vote_count) {
@@ -42,7 +41,6 @@ public class Movie implements Parcelable {
         this.vote_average = vote_average;
         this.vote_count = vote_count;
     }
-    */
 
     public Movie(Parcel parcel){
         id = parcel.readFloat();
