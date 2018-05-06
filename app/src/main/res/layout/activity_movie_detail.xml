@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".MovieDetail">
     <TextView
+        android:id="@+id/textview_movie_title"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:text="Movie Title goes here"/>

@@ -29,20 +29,19 @@ public class MainActivity extends AppCompatActivity {
     private ProgressBar mLoadingIndicator;
     private TextView mResponseView;
     private TextView mErrorMessage;
+    public Movie[] movies;
+    public GridView gridView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        gridView = findViewById(R.id.gridview);
        // mLoadingIndicator = (ProgressBar) findViewById(R.id.progressBar);
        // mResponseView = (TextView) findViewById(R.id.responseView);
        // mErrorMessage = (TextView) findViewById(R.id.errorMessage);
        Log.d("myTag", "ApplicationStarted");
        getMovies("popular");
-
-
-
-
     }
 
     private void getMovies(String sort) {
@@ -75,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
             //mLoadingIndicator.setVisibility(View.INVISIBLE);
             if (movieResults != null && !movieResults.equals("")) {
                 // COMPLETED (17) Call showJsonDataView if we have valid, non-null results
-                Movie[] movies = JsonUtils.parseMovieJson(movieResults);
+                movies = JsonUtils.parseMovieJson(movieResults);
                 showJsonDataView(movies);
 
             } else {
@@ -86,25 +85,27 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private  void showJsonDataView(Movie[] movies) {
+    private  void showJsonDataView(final Movie[] movies) {
         // First, make sure the error is invisible
        // mErrorMessage.setVisibility(View.INVISIBLE);
         // Then, make sure the JSON data is visible
         //mResponseView.setVisibility(View.VISIBLE);
-        GridView gridView = findViewById(R.id.gridview);
-        MoviesAdapter moviesAdapter = new MoviesAdapter(this, movies);
+
+        final MoviesAdapter moviesAdapter = new MoviesAdapter(this, movies);
         gridView.setAdapter(moviesAdapter);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView parent, View view, int position, long id) {
-                launchDetailActivity(position);
+                Movie movie = (Movie) moviesAdapter.getItem(position);
+                launchDetailActivity(position, movie.getTitle());
             }
         });
     }
 
-    private void launchDetailActivity(int position) {
+    private void launchDetailActivity(int position, String title) {
         Intent intent = new Intent(this, MovieDetail.class);
-        intent.putExtra(MovieDetail.EXTRA_POSITION, position);
+        Log.d("movietitle2", title);
+        intent.putExtra("title", title);
         startActivity(intent);
     }
 
@@ -138,7 +139,6 @@ public class MainActivity extends AppCompatActivity {
             getMovies("top_rated");
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 }

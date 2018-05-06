@@ -28,12 +28,12 @@ public class MoviesAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return (long) movies[position].getId();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return movies[position];
     }
 
     @Override
