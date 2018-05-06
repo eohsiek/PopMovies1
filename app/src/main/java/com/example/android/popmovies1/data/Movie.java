@@ -3,8 +3,6 @@ package com.example.android.popmovies1.data;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.ArrayList;
-
 public class Movie implements Parcelable {
     private float id;
     private String title;
@@ -22,27 +20,10 @@ public class Movie implements Parcelable {
 
     public Movie (){
 
-    };
-
-    public Movie(float id, String title, float popularity, String poster_path, String original_language,
-    String original_title, String backdrop_path, boolean adult, String overview, String release_date,
-    boolean video, float vote_average, float vote_count) {
-        this.id = id;
-        this.title = title;
-        this.popularity = popularity;
-        this.poster_path = poster_path;
-        this.original_language = original_language;
-        this.original_title = original_title;
-        this.backdrop_path = backdrop_path;
-        this.adult = adult;
-        this.overview = overview;
-        this.release_date = release_date;
-        this.video = video;
-        this.vote_average = vote_average;
-        this.vote_count = vote_count;
     }
 
-    public Movie(Parcel parcel){
+
+    private Movie(Parcel parcel){
         id = parcel.readFloat();
         title = parcel.readString();
         popularity = parcel.readFloat();
@@ -50,10 +31,10 @@ public class Movie implements Parcelable {
         original_language = parcel.readString();
         original_title = parcel.readString();
         backdrop_path = parcel.readString();
-        adult = (Boolean) parcel.readValue(null);
+        adult = (Boolean) parcel.readValue(getClass().getClassLoader());
         overview = parcel.readString();
         release_date = parcel.readString();
-        video = (Boolean) parcel.readValue(null);
+        video = (Boolean) parcel.readValue(getClass().getClassLoader());
         vote_average = parcel.readFloat();
         vote_count = parcel.readFloat();
     }
@@ -96,9 +77,11 @@ public class Movie implements Parcelable {
     // Getter Methods
 
     public String getPosterURI(){
-        String posterURI = "http://image.tmdb.org/t/p/w185" + this.poster_path;
-        String message = posterURI;
-        return posterURI;
+        return "http://image.tmdb.org/t/p/w185" + this.poster_path;
+    }
+
+    public String getVote() {
+        return String.valueOf(vote_average) + "/10" ;
     }
 
     public float getVote_count() {

@@ -5,10 +5,67 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MovieDetail">
+
     <TextView
         android:id="@+id/textview_movie_title"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:text="Movie Title goes here"/>
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:text="Title"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageview_movie_poster"
+        android:layout_width="215dp"
+        android:layout_height="297dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:contentDescription="@string/movie_poster_content_desc"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textview_movie_title"
+        app:layout_constraintVertical_bias="0.078" />
+
+    <TextView
+        android:id="@+id/textview_release_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="72dp"
+        android:text="Release date"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintStart_toEndOf="@+id/imageview_movie_poster"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textview_vote_average"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="28dp"
+        android:text="vote average"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintStart_toEndOf="@+id/imageview_movie_poster"
+        app:layout_constraintTop_toBottomOf="@+id/textview_release_date" />
+
+    <TextView
+        android:id="@+id/textview_overview"
+        android:layout_width="356dp"
+        android:layout_height="111dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="This is the long overview"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageview_movie_poster"
+        app:layout_constraintVertical_bias="0.436" />
 
 </android.support.constraint.ConstraintLayout>
