@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity   implements MoviesAdapter.M
         recyclerView = (RecyclerView) findViewById(R.id.recycleViewMovies);
         moviesAdapter = new MoviesAdapter(this);
         recyclerView.setAdapter(moviesAdapter);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(),2);
+        GridAutofitLayoutManager gridLayoutManager = new GridAutofitLayoutManager(this, 500);
         recyclerView.setLayoutManager(gridLayoutManager);
 
 
