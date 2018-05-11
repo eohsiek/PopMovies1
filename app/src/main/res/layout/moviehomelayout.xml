@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:gravity="center"    >
+
     <ImageView
         android:id="@+id/imageview_movie_poster"
         android:layout_width="215dp"
         android:layout_height="300dp"
-        android:scaleType="fitXY"/>
+        android:contentDescription="@string/movie_poster_content_desc"
+        android:scaleType="centerCrop" />
 
 </LinearLayout>

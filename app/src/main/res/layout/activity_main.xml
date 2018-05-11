@@ -7,7 +7,7 @@
     <!--COMPLETED (4) Set the width and the height of the RecyclerView to match_parent-->
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycleViewMovies"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"/>
 
     <TextView
