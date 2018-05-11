@@ -1,16 +1,17 @@
 package com.example.android.popmovies1;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -26,21 +27,24 @@ import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ProgressBar mLoadingIndicator;
-    private TextView mResponseView;
-    private TextView mErrorMessage;
-    public Movie[] movies;
-    public GridView gridView;
+    private RecyclerView recyclerView;
+    private MoviesAdapter moviesAdapter;
+    private TextView errorMessage;
+    private ProgressBar loadingIndicator;
+    private Movie[] movies;
+    private Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        mContext=this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        gridView = findViewById(R.id.gridview);
-       // mLoadingIndicator = (ProgressBar) findViewById(R.id.progressBar);
-       // mResponseView = (TextView) findViewById(R.id.responseView);
-       // mErrorMessage = (TextView) findViewById(R.id.errorMessage);
-       Log.d("myTag", "ApplicationStarted");
+        recyclerView = (RecyclerView) findViewById(R.id.recycleViewMovies);
+
+
+        /* This TextView is used to display errors and will be hidden if there are no errors */
+        errorMessage = (TextView) findViewById(R.id.errorMessage);
+
        getMovies("popular");
     }
 
@@ -75,6 +79,10 @@ public class MainActivity extends AppCompatActivity {
             if (movieResults != null && !movieResults.equals("")) {
                 // COMPLETED (17) Call showJsonDataView if we have valid, non-null results
                 movies = JsonUtils.parseMovieJson(movieResults);
+                moviesAdapter = new MoviesAdapter(mContext, movies);
+                recyclerView.setAdapter(moviesAdapter);
+                GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(),2);
+                recyclerView.setLayoutManager(gridLayoutManager);
                 showJsonDataView(movies);
 
             } else {
@@ -87,19 +95,10 @@ public class MainActivity extends AppCompatActivity {
 
     private  void showJsonDataView(final Movie[] movies) {
         // First, make sure the error is invisible
-       // mErrorMessage.setVisibility(View.INVISIBLE);
+        errorMessage.setVisibility(View.INVISIBLE);
         // Then, make sure the JSON data is visible
         //mResponseView.setVisibility(View.VISIBLE);
 
-        final MoviesAdapter moviesAdapter = new MoviesAdapter(this, movies);
-        gridView.setAdapter(moviesAdapter);
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView parent, View view, int position, long id) {
-                Movie movie = (Movie) moviesAdapter.getItem(position);
-                launchDetailActivity(position, movie);
-            }
-        });
     }
 
     private void launchDetailActivity(int position, Movie movie) {
@@ -110,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
 
     private  void showErrorMessage() {
         // First, hide the currently visible data
-       // mErrorMessage.setVisibility(View.INVISIBLE);
+        errorMessage.setVisibility(View.INVISIBLE);
         // Then, show the error
         //mResponseView.setVisibility(View.VISIBLE);
     }
