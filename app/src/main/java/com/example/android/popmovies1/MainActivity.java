@@ -25,7 +25,7 @@ import java.net.URL;
 //https://www.iconfinder.com/icons/1055062/film_film_reel_movie_reel_icon#size=128
 //https://www.raywenderlich.com/127544/android-gridview-getting-started
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity   implements MoviesAdapter.MoviesAdapterOnClickHandler {
 
     private RecyclerView recyclerView;
     private MoviesAdapter moviesAdapter;
@@ -40,6 +40,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         recyclerView = (RecyclerView) findViewById(R.id.recycleViewMovies);
+        moviesAdapter = new MoviesAdapter(this);
+        recyclerView.setAdapter(moviesAdapter);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(),2);
+        recyclerView.setLayoutManager(gridLayoutManager);
 
 
         /* This TextView is used to display errors and will be hidden if there are no errors */
@@ -53,6 +57,12 @@ public class MainActivity extends AppCompatActivity {
         new GetPopularMoviesTask().execute(movieURL);
     }
 
+    @Override
+    public void onClick(Movie movie) {
+        Intent intent = new Intent(this, MovieDetail.class);
+        intent.putExtra("movie", movie);
+        startActivity(intent);
+    }
     public class GetPopularMoviesTask extends AsyncTask<URL, Void, String> {
 
         protected void onPreExecute() {
@@ -79,10 +89,7 @@ public class MainActivity extends AppCompatActivity {
             if (movieResults != null && !movieResults.equals("")) {
                 // COMPLETED (17) Call showJsonDataView if we have valid, non-null results
                 movies = JsonUtils.parseMovieJson(movieResults);
-                moviesAdapter = new MoviesAdapter(mContext, movies);
-                recyclerView.setAdapter(moviesAdapter);
-                GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(),2);
-                recyclerView.setLayoutManager(gridLayoutManager);
+                moviesAdapter.setMovieData(mContext, movies);
                 showJsonDataView(movies);
 
             } else {
@@ -96,15 +103,10 @@ public class MainActivity extends AppCompatActivity {
     private  void showJsonDataView(final Movie[] movies) {
         // First, make sure the error is invisible
         errorMessage.setVisibility(View.INVISIBLE);
+        recyclerView.setVisibility(View.VISIBLE);
         // Then, make sure the JSON data is visible
         //mResponseView.setVisibility(View.VISIBLE);
 
-    }
-
-    private void launchDetailActivity(int position, Movie movie) {
-        Intent intent = new Intent(this, MovieDetail.class);
-        intent.putExtra("movie", movie);
-        startActivity(intent);
     }
 
     private  void showErrorMessage() {
