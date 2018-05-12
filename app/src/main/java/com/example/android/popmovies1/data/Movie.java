@@ -88,6 +88,11 @@ public class Movie implements Parcelable {
         return String.valueOf(vote_average) + "/10" ;
     }
 
+    public String getYear() {
+        String str[] = this.release_date.split("/");
+        return (str[0]);
+    }
+
     public float getVote_count() {
         return vote_count;
     }
