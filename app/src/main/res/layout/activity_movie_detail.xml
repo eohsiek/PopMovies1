@@ -33,14 +33,14 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textview_movie_title"
-            app:layout_constraintVertical_bias="0.377" />
+            app:layout_constraintVertical_bias="0.15" />
 
         <TextView
             android:id="@+id/textview_release_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="28dp"
             android:text="@{movie.year, default=@string/movie_date_placeholder}"
             android:textAppearance="@style/Year"
             app:layout_constraintStart_toEndOf="@+id/imageview_movie_poster"
@@ -50,8 +50,8 @@
             android:id="@+id/textview_vote_average"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
             android:text="@{movie.vote, default=@string/movie_vote_placeholder}"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             app:layout_constraintStart_toEndOf="@+id/imageview_movie_poster"
@@ -68,21 +68,23 @@
             android:text="@{movie.overview, default=@string/movie_overview_placeholder}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageview_movie_poster"
-            app:layout_constraintVertical_bias="0.508" />
+            app:layout_constraintVertical_bias="0.055" />
+
 
         <TextView
             android:id="@+id/textview_movie_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="374dp"
+            android:layout_height="180dp"
+            android:layout_gravity="bottom"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="148dp"
+            android:layout_marginTop="8dp"
             android:text="@{movie.title , default=@string/movie_title_placeholder}"
             android:textAppearance="@style/WhiteHeader"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/imageview_backdrop" />
+
     </android.support.constraint.ConstraintLayout>
 
 </layout>

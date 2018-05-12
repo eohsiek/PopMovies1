@@ -89,7 +89,7 @@ public class Movie implements Parcelable {
     }
 
     public String getYear() {
-        String str[] = this.release_date.split("/");
+        String str[] = this.release_date.split("-");
         return (str[0]);
     }
 
