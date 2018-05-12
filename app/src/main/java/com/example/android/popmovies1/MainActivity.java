@@ -8,6 +8,8 @@ package com.example.android.popmovies1;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
@@ -42,7 +44,7 @@ public class MainActivity extends AppCompatActivity   implements MoviesAdapter.M
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        mContext=this;
+        mContext = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -59,7 +61,11 @@ public class MainActivity extends AppCompatActivity   implements MoviesAdapter.M
 
         loadingIndicator = (ProgressBar) findViewById(R.id.loadingIndicator);
 
-        getMovies(SORT);
+        if (isOnline()) {
+            getMovies(SORT);
+        } else {
+            showErrorMessage();
+        }
     }
 
     private void getMovies(String sort) {
@@ -153,6 +159,14 @@ public class MainActivity extends AppCompatActivity   implements MoviesAdapter.M
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         SORT = savedInstanceState.getString("SORT");
+    }
+
+    public boolean isOnline() {
+        ConnectivityManager connectivityManager =
+                (ConnectivityManager)mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo network = connectivityManager.getActiveNetworkInfo();
+        return network != null && network.isConnectedOrConnecting();
     }
 
 }
