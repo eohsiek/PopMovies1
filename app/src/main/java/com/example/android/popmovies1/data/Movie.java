@@ -80,6 +80,10 @@ public class Movie implements Parcelable {
         return "http://image.tmdb.org/t/p/w185" + this.poster_path;
     }
 
+    public String getBackdropURI(){
+        return "http://image.tmdb.org/t/p/w185" + this.backdrop_path;
+    }
+
     public String getVote() {
         return String.valueOf(vote_average) + "/10" ;
     }

@@ -25,5 +25,6 @@ public class MovieDetail extends AppCompatActivity {
         binding.setMovie(movie);
 
         Picasso.with(this).load(movie.getPosterURI()).into(binding.imageviewMoviePoster);
+        Picasso.with(this).load(movie.getBackdropURI()).into(binding.imageviewBackdrop);
     }
 }

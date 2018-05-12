@@ -17,6 +17,7 @@ public class JsonUtils {
             JSONObject movieJson = new JSONObject(json);
             movie.setTitle(movieJson.optString("title"));
             movie.setPoster_path(movieJson.optString("poster_path"));
+            movie.setBackdrop_path(movieJson.optString("backdrop_path"));
             movie.setOverview(movieJson.optString("overview"));
             movie.setRelease_date(movieJson.optString("release_date"));
             movie.setVote_average(movieJson.optInt("vote_average"));
