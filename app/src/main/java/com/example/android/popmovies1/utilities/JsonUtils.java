@@ -1,9 +1,6 @@
 package com.example.android.popmovies1.utilities;
 
-import android.util.Log;
-
 import com.example.android.popmovies1.data.Movie;
-import com.example.android.popmovies1.data.MoviesAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;

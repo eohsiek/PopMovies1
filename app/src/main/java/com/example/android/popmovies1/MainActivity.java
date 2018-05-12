@@ -9,7 +9,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -74,12 +73,12 @@ public class MainActivity extends AppCompatActivity   implements MoviesAdapter.M
         intent.putExtra("movie", movie);
         startActivity(intent);
     }
+
     public class GetPopularMoviesTask extends AsyncTask<URL, Void, String> {
 
         protected void onPreExecute() {
             super.onPreExecute();
             loadingIndicator.setVisibility(View.VISIBLE);
-
         }
 
         @Override
