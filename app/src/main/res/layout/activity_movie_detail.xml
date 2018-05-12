@@ -22,6 +22,7 @@
             android:contentDescription="@string/movie_poster_content_desc"
             android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="0dp" />
 
@@ -36,7 +37,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textview_movie_title"
-            app:layout_constraintVertical_bias="0.063" />
+            app:layout_constraintVertical_bias="0.204" />
 
         <TextView
             android:id="@+id/textview_release_date"
@@ -79,13 +80,14 @@
         <TextView
             android:id="@+id/textview_movie_title"
             android:layout_width="374dp"
-            android:layout_height="104dp"
+            android:layout_height="151dp"
+            android:layout_marginBottom="8dp"
             android:layout_marginStart="4dp"
-            android:layout_marginTop="96dp"
+            android:gravity="bottom|left"
             android:text="@{movie.title , default=@string/movie_title_placeholder}"
             android:textAppearance="@style/WhiteHeader"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/imageview_backdrop" />
+            app:layout_constraintBottom_toBottomOf="@+id/imageview_backdrop"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
 
