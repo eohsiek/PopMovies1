@@ -1,12 +1,9 @@
 package com.example.android.popmovies1;
 
-import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.example.android.popmovies1.data.Movie;
 

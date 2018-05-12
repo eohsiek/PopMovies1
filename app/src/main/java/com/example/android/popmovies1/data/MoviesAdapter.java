@@ -21,9 +21,6 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesAdap
 
     private final MoviesAdapterOnClickHandler mClickHandler;
 
-    /**
-     * The interface that receives onClick messages.
-     */
     public interface MoviesAdapterOnClickHandler {
         void onClick(Movie movie);
     }

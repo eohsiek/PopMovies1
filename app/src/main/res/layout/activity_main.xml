@@ -3,9 +3,6 @@
     android:layout_height="match_parent"
     android:background="@color/colorBlack">
 
-    <!--COMPLETED (2) Replace ScrollView and TextView with RecyclerView-->
-    <!--COMPLETED (3) Give the RecyclerView an id of @+id/recyclerview_forecast-->
-    <!--COMPLETED (4) Set the width and the height of the RecyclerView to match_parent-->
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycleViewMovies"
         android:layout_gravity="center"

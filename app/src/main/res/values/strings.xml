@@ -1,15 +1,16 @@
 <resources>
     <string name="app_name">Popular Movies</string>
-    <string name="error_message">There was an error.</string>
+    <string name="error_message">There was an error retrieving movie data.  Please make sure you are connected to a network.</string>
+    <string name="sort_default">popular</string>
+    <string name="sortvalue_popular">popular</string>
+    <string name="sortvalue_rating">top_rated</string>
     <string name="sort_popular">Sort by Popularity</string>
     <string name="sort_rating">Sort by Rating</string>
-    <string name="title_activity_movie_detail">Movie Detail</string>
-    <string name="movie_poster_content_desc">Movie Poster</string>
-    <string name="movie_title_placeholder">Movie Title Goes Here</string>
-    <string name="movie_date_placeholder">2001</string>
-    <string name="movie_vote_placeholder">5.0/10</string>
-    <string name="movie_overview_placeholder">Lorem ipsum dolor sit amet, eu error recteque sadipscing per. Vix ex sapientem laboramus comprehensam, ius an porro indoctum moderatius, usu id diam latine. Ei malorum ceteros facilisis sed, paulo epicurei qui te. Ne corrumpit urbanitas theophrastus eam, ludus veniam discere at eos, qui idque quando albucius id. Est cu modo nonumy, nec et evertitur voluptatum, graece doming incorrupte te eam.
-Nam everti theophrastus conclusionemque id. Ea voluptua interpretaris vel, ut porro labores vis. Vel omnis nostro meliore et. Ei movet nonumy duo, qui hinc fuisset ex. Nemore necessitatibus nec cu, ad antiopam delicata his.
 
-No ferri solum placerat pro, justo atqui audiam has eu. Eos liber euripidis cu. Et tota laudem probatus has, sanctus inermis delicata in mel, eam id mazim perfecto similique. In mea quis legimus luptatum, ea feugiat corpora reprehendunt est. Te pri altera tractatos.</string>
+    <string name="title_activity_movie_detail">Movie Title </string>
+    <string name="movie_poster_content_desc">Movie Poster</string>
+    <string name="movie_title_placeholder">Movie Title not found</string>
+    <string name="movie_date_placeholder">Release Date not found</string>
+    <string name="movie_vote_placeholder">Rating not found</string>
+    <string name="movie_overview_placeholder">Overview not found</string>
 </resources>
