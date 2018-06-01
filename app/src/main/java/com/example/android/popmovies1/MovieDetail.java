@@ -21,7 +21,7 @@ public class MovieDetail extends AppCompatActivity {
         Movie movie = intent.getParcelableExtra("movie");
         binding.setMovie(movie);
 
-        Picasso.with(this).load(movie.getPosterURI()).into(binding.imageviewMoviePoster);
-        Picasso.with(this).load(movie.getBackdropURI()).into(binding.imageviewBackdrop);
+        Picasso.with(this).load(movie.getPosterURI()).placeholder(R.drawable.placeholder).error(R.drawable.notfound).into(binding.imageviewMoviePoster);
+        Picasso.with(this).load(movie.getBackdropURI()).placeholder(R.drawable.placeholder).error(R.drawable.notfound).into(binding.imageviewBackdrop);
     }
 }
