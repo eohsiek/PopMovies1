@@ -4,7 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Movie implements Parcelable {
-    private float id;
+    private String id;
     private String title;
     private float popularity;
     private String poster_path;
@@ -24,7 +24,7 @@ public class Movie implements Parcelable {
 
 
     private Movie(Parcel parcel){
-        id = parcel.readFloat();
+        id = parcel.readString();
         title = parcel.readString();
         popularity = parcel.readFloat();
         poster_path = parcel.readString();
@@ -46,7 +46,7 @@ public class Movie implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeFloat(id);
+        dest.writeString(id);
         dest.writeString(title);
         dest.writeFloat(popularity);
         dest.writeString(poster_path);
@@ -97,8 +97,8 @@ public class Movie implements Parcelable {
         return vote_count;
     }
 
-    public float getId() {
-        return id;
+    public String getId() {
+        return this.id;
     }
 
     public boolean getVideo() {
@@ -151,7 +151,7 @@ public class Movie implements Parcelable {
         this.vote_count = vote_count;
     }
 
-    public void setId( float id ) {
+    public void setId( String id ) {
         this.id = id;
     }
 

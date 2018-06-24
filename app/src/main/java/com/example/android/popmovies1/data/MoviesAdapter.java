@@ -73,7 +73,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesAdap
 
     @Override
     public long getItemId(int position) {
-        return (long) movies[position].getId();
+        return (long) Long.parseLong(movies[position].getId());
     }
 
     public void setMovieData(Context context, Movie[] movies) {

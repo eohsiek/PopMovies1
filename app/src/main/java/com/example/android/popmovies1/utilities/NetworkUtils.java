@@ -20,6 +20,9 @@ public class NetworkUtils {
     final private static String API_KEY = BuildConfig.MovieDBAPIKey;
     private static String SUBDIRECTORY  = "popular";
 
+    //http://api.themoviedb.org/3/movie/383498/videos?api_key=blah
+    //http://api.themoviedb.org/3/movie/383498/reviews?api_key=blah
+
     public static URL buildUrl(String sort) {
         SUBDIRECTORY = sort;
         Uri builtUri = Uri.parse(MOVIEDB_API_BASE_URI).buildUpon()
@@ -33,7 +36,25 @@ public class NetworkUtils {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-        Log.d("myTag", "Got the URL");
+        Log.d("myTag", String.valueOf(url));
+
+        return url;
+    }
+
+    public static URL buildMovieUrl(String type, String movieid) {
+        Uri builtUri = Uri.parse(MOVIEDB_API_BASE_URI).buildUpon()
+                .appendPath(movieid)
+                .appendPath(type)
+                .appendQueryParameter(PARAM_API_KEY, API_KEY)
+                .build();
+
+        URL url = null;
+        try {
+            url = new URL(builtUri.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        Log.d("movieURL", String.valueOf(url));
 
         return url;
     }

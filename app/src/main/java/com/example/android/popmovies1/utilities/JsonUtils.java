@@ -12,6 +12,7 @@ public class JsonUtils {
         try {
             Movie movie = new Movie();
             JSONObject movieJson = new JSONObject(json);
+            movie.setId(movieJson.optString("id"));
             movie.setTitle(movieJson.optString("title"));
             movie.setPoster_path(movieJson.optString("poster_path"));
             movie.setBackdrop_path(movieJson.optString("backdrop_path"));
