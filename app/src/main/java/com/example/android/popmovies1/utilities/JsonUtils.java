@@ -1,6 +1,9 @@
 package com.example.android.popmovies1.utilities;
 
+import android.util.Log;
+
 import com.example.android.popmovies1.data.Movie;
+import com.example.android.popmovies1.data.Trailer;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,7 +40,33 @@ public class JsonUtils {
         }  catch (JSONException e) {
             throw new RuntimeException(e);
         }
+    }
 
+    private static Trailer trailerJsontoObject(String json) {
+        try {
+            Trailer trailer = new Trailer();
+            JSONObject trailerJson = new JSONObject(json);
+            trailer.setSource(trailerJson.optString("source"));
+            trailer.setName(trailerJson.optString("name"));
+            trailer.setSize(trailerJson.optString("size"));
+            trailer.setType(trailerJson.optString("type"));
+            return trailer;
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
+    public static Trailer[] parseTrailerJson(String json) {
+        try {
+            JSONObject trailerJson = new JSONObject(json);
+            JSONArray results = trailerJson.optJSONArray("youtube");
+            Trailer[] trailerArray = new Trailer[results.length()];
+            for (int i = 0; i < results.length(); i++) {
+                trailerArray[i] = trailerJsontoObject(results.optString(i));
+            }
+            return trailerArray;
+        }  catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
