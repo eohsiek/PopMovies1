@@ -2,7 +2,9 @@ package com.example.android.popmovies1.data;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +35,8 @@ public class TrailersAdapter extends RecyclerView.Adapter<TrailersAdapter.Traile
         public TrailersAdapterViewHolder(TrailerLayoutBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
+            View view = binding.getRoot();
+            view.setOnClickListener(this);
         }
 
         public void bind(Trailer trailer) {
@@ -44,6 +48,9 @@ public class TrailersAdapter extends RecyclerView.Adapter<TrailersAdapter.Traile
         public void onClick(View v) {
             int adapterPosition = getAdapterPosition();
             Trailer trailer = trailers[adapterPosition];
+            Uri url = Uri.parse(trailer.getYouTubeURL()); // get your url from list item or your code.
+            Intent intent = new Intent(Intent.ACTION_VIEW, url);
+            mContext.startActivity(intent);
         }
     }
 

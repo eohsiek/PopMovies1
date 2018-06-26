@@ -82,7 +82,7 @@ public class Trailer implements Parcelable {
 
     public String getType ()
     {
-        return type;
+        return type + ": " + name;
     }
 
     public void setType (String type)
