@@ -13,6 +13,8 @@ import android.view.View;
 
 import com.example.android.popmovies1.data.Movie;
 
+import com.example.android.popmovies1.data.Review;
+import com.example.android.popmovies1.data.ReviewsAdapter;
 import com.example.android.popmovies1.data.Trailer;
 import com.example.android.popmovies1.data.TrailersAdapter;
 import com.example.android.popmovies1.databinding.ActivityMovieDetailBinding;
@@ -25,9 +27,12 @@ import java.net.URL;
 
 public class MovieDetail extends AppCompatActivity {
 
-    private RecyclerView recyclerView;
+    private RecyclerView recyclerViewTrailers;
+    private RecyclerView recyclerViewReviews;
     private TrailersAdapter trailersAdapter;
+    private ReviewsAdapter reviewsAdapter;
     private Trailer[] trailers;
+    private Review[] reviews;
     private Context mContext;
 
     @Override
@@ -36,10 +41,16 @@ public class MovieDetail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         ActivityMovieDetailBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_detail);
 
-        recyclerView = (RecyclerView) findViewById(R.id.recycleViewTrailers);
+        recyclerViewTrailers = (RecyclerView) findViewById(R.id.recycleViewTrailers);
         trailersAdapter = new TrailersAdapter();
-        recyclerView.setAdapter(trailersAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+        recyclerViewTrailers.setAdapter(trailersAdapter);
+        recyclerViewTrailers.setLayoutManager(new LinearLayoutManager(mContext));
+
+        recyclerViewReviews = (RecyclerView) findViewById(R.id.recycleViewReviews);
+        reviewsAdapter = new ReviewsAdapter();
+        recyclerViewReviews.setAdapter(reviewsAdapter);
+        recyclerViewReviews.setLayoutManager(new LinearLayoutManager(mContext));
+
         Intent intent = getIntent();
         Movie movie = intent.getParcelableExtra("movie");
         binding.setMovie(movie);
@@ -49,7 +60,7 @@ public class MovieDetail extends AppCompatActivity {
         Picasso.with(this).load(movie.getBackdropURI()).placeholder(R.drawable.placeholder).error(R.drawable.notfound).into(binding.imageviewBackdrop);
 
         getTrailers(String.valueOf(movie.getId()));
-        //getReviews(String.valueOf(movie.getId()));
+        getReviews(String.valueOf(movie.getId()));
 
     }
 
@@ -74,6 +85,7 @@ public class MovieDetail extends AppCompatActivity {
                 e.printStackTrace();
             }
             Log.d("MovieID", String.valueOf(jsonstring));
+            Log.d("MovieURL", String.valueOf(searchUrl));
             return jsonstring;
         }
 
@@ -81,8 +93,17 @@ public class MovieDetail extends AppCompatActivity {
         protected void onPostExecute(String jsonstring) {
 
             if (jsonstring != null && !jsonstring.equals("")) {
-                trailers = JsonUtils.parseTrailerJson(jsonstring);
-                trailersAdapter.setTrailerData(mContext, trailers);
+                if(jsonstring.contains("youtube")) {
+                    trailers = JsonUtils.parseTrailerJson(jsonstring);
+                    trailersAdapter.setTrailerData(mContext, trailers);
+                }
+                else {
+                    reviews = JsonUtils.parseReviewJson(jsonstring);
+                    reviewsAdapter.setReviewsData(mContext, reviews);
+                }
+
+
+
                 //showTrailers(trailers);
 
             } else {

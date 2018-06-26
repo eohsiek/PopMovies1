@@ -9,6 +9,7 @@
 
     <string name="title_activity_movie_detail">Movie Title </string>
     <string name="movie_poster_content_desc">Movie Poster</string>
+    <string name="movie_trailer_thumbnail">Trailer Thumbnail</string>
     <string name="movie_title_placeholder">Movie Title not found</string>
     <string name="movie_date_placeholder">Release Date not found</string>
     <string name="movie_vote_placeholder">Rating not found</string>

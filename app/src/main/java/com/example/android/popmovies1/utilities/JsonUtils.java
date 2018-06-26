@@ -3,6 +3,7 @@ package com.example.android.popmovies1.utilities;
 import android.util.Log;
 
 import com.example.android.popmovies1.data.Movie;
+import com.example.android.popmovies1.data.Review;
 import com.example.android.popmovies1.data.Trailer;
 
 import org.json.JSONArray;
@@ -65,6 +66,34 @@ public class JsonUtils {
                 trailerArray[i] = trailerJsontoObject(results.optString(i));
             }
             return trailerArray;
+        }  catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static Review reviewJsontoObject(String json) {
+        try {
+            Review review = new Review();
+            JSONObject trailerJson = new JSONObject(json);
+            review.setId(trailerJson.optString("id"));
+            review.setAuthor(trailerJson.optString("author"));
+            review.setContent(trailerJson.optString("content"));
+            review.setUrl(trailerJson.optString("url"));
+            return review;
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static Review[] parseReviewJson(String json) {
+        try {
+            JSONObject reviewJson = new JSONObject(json);
+            JSONArray results = reviewJson.optJSONArray("results");
+            Review[] reviewArray = new Review[results.length()];
+            for (int i = 0; i < results.length(); i++) {
+                reviewArray[i] = reviewJsontoObject(results.optString(i));
+            }
+            return reviewArray;
         }  catch (JSONException e) {
             throw new RuntimeException(e);
         }

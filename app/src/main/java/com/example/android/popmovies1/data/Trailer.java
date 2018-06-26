@@ -1,7 +1,12 @@
 package com.example.android.popmovies1.data;
 
+import android.databinding.BindingAdapter;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.widget.ImageView;
+
+import com.example.android.popmovies1.R;
+import com.squareup.picasso.Picasso;
 
 public class Trailer implements Parcelable {
     private String source;
@@ -45,6 +50,16 @@ public class Trailer implements Parcelable {
         }
     };
 
+    public String getYouTubeURL() {
+        String url =  "https://www.youtube.com/watch?v=" + source;
+        return url;
+    }
+
+    public String getYouTubeThumbnail() {
+        String url = "https://img.youtube.com/vi/" + source + "/default.jpg";
+        return url;
+    }
+
     public String getSource ()
     {
         return source;
@@ -85,9 +100,27 @@ public class Trailer implements Parcelable {
         this.size = size;
     }
 
+    public String getImageUrl() {
+        String url = "https://img.youtube.com/vi/" + source + "/default.jpg";
+        return url;
+    }
+
     @Override
     public String toString()
     {
-        return "ClassPojo [source = "+source+", name = "+name+", type = "+type+", size = "+size+"]";
+        return "Trailer [source = "+source+", name = "+name+", type = "+type+", size = "+size+"]";
     }
+
+
+
+    @BindingAdapter({"imageUrl"})
+    public static void loadImage(ImageView view, String imageUrl) {
+        Picasso.with(view.getContext())
+                .load(imageUrl)
+                .error(R.drawable.notfound)
+                .placeholder(R.drawable.placeholder)
+                .into(view);
+    }
+
+
 }
