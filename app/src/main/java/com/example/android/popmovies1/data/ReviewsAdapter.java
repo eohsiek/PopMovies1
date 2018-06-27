@@ -25,7 +25,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewsA
     public ReviewsAdapter() {
     }
 
-    private class ReviewsAdapterViewHolder extends RecyclerView.ViewHolder {
+    public class ReviewsAdapterViewHolder extends RecyclerView.ViewHolder  {
 
         private ReviewLayoutBinding binding;
 
@@ -34,7 +34,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewsA
             this.binding = binding;
         }
 
-        private void bind(Review review) {
+        public void bind(Review review) {
             binding.setReview(review);
             binding.executePendingBindings();
         }
