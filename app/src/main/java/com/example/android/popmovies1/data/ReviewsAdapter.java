@@ -25,24 +25,18 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewsA
     public ReviewsAdapter() {
     }
 
-    public class ReviewsAdapterViewHolder extends RecyclerView.ViewHolder  implements View.OnClickListener {
+    private class ReviewsAdapterViewHolder extends RecyclerView.ViewHolder {
 
         private ReviewLayoutBinding binding;
 
-        public ReviewsAdapterViewHolder(ReviewLayoutBinding binding) {
+        private ReviewsAdapterViewHolder(ReviewLayoutBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }
 
-        public void bind(Review review) {
+        private void bind(Review review) {
             binding.setReview(review);
             binding.executePendingBindings();
-        }
-
-        @Override
-        public void onClick(View v) {
-            int adapterPosition = getAdapterPosition();
-            Review review = reviews[adapterPosition];
         }
     }
 

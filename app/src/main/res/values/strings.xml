@@ -14,4 +14,8 @@
     <string name="movie_date_placeholder">Release Date not found</string>
     <string name="movie_vote_placeholder">Rating not found</string>
     <string name="movie_overview_placeholder">Overview not found</string>
+    <string name="noreviews">No reviews available.</string>
+    <string name="notrailers">No trailers available.</string>
+    <string name="trailers">Trailers</string>
+    <string name="reviews">Reviews</string>
 </resources>

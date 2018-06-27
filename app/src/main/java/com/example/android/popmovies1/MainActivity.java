@@ -1,6 +1,8 @@
 /*
 App Icon from
 https://www.iconfinder.com/icons/1055062/film_film_reel_movie_reel_icon#size=128
+Heart Icon from
+http://www.iconarchive.com/show/free-valentine-heart-icons-by-designbolts/Heart-icon.html
  */
 
 package com.example.android.popmovies1;
@@ -48,18 +50,17 @@ public class MainActivity extends AppCompatActivity   implements MoviesAdapter.M
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
 
-        recyclerView = (RecyclerView) findViewById(R.id.recycleViewMovies);
+        recyclerView = findViewById(R.id.recycleViewMovies);
         moviesAdapter = new MoviesAdapter(this);
         recyclerView.setAdapter(moviesAdapter);
         GridAutofitLayoutManager gridLayoutManager = new GridAutofitLayoutManager(this, 500);
         recyclerView.setLayoutManager(gridLayoutManager);
 
-        errorMessage = (TextView) findViewById(R.id.errorMessage);
+        errorMessage =  findViewById(R.id.errorMessage);
         errorMessage.setText(getResources().getText(R.string.error_message));
 
-        loadingIndicator = (ProgressBar) findViewById(R.id.loadingIndicator);
+        loadingIndicator =  findViewById(R.id.loadingIndicator);
 
         if (isOnline()) {
             getMovies(SORT);
