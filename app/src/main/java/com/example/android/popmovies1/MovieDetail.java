@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -31,7 +32,7 @@ import com.squareup.picasso.Picasso;
 import java.io.IOException;
 import java.net.URL;
 
-public class MovieDetail extends AppCompatActivity {
+public class MovieDetail extends AppCompatActivity  {
 
     private RecyclerView recyclerViewTrailers;
     private RecyclerView recyclerViewReviews;
@@ -46,7 +47,7 @@ public class MovieDetail extends AppCompatActivity {
     private Context mContext;
     private static final String DATABASE_NAME = "favoritesdb";
     private FavoriteDatabase favoriteDatabase;
-
+    private String movieId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,14 +72,15 @@ public class MovieDetail extends AppCompatActivity {
         favoritesButton = findViewById(R.id.button_favorite);
         hearticon = findViewById(R.id.imageview_favorite);
 
-
-
         favoriteDatabase = Room.databaseBuilder(getApplicationContext(), FavoriteDatabase.class, DATABASE_NAME).build();
+
 
         Intent intent = getIntent();
         Movie movie = intent.getParcelableExtra("movie");
+        movieId = movie.getId();
         binding.setMovie(movie);
-        Log.d("MovieID", String.valueOf(movie.getId()));
+
+        checkFavorite();
 
         Picasso.with(this).load(movie.getPosterURI()).placeholder(R.drawable.placeholder).error(R.drawable.notfound).into(binding.imageviewMoviePoster);
         Picasso.with(this).load(movie.getBackdropURI()).placeholder(R.drawable.placeholder).error(R.drawable.notfound).into(binding.imageviewBackdrop);
@@ -95,17 +97,37 @@ public class MovieDetail extends AppCompatActivity {
                 buttonText = buttonText.replaceAll("\\n","");
                 buttonText = buttonText.toUpperCase();
                 if(buttonText.equals("ADD TO FAVORITES")) {
-                    favoritesButton.setText(R.string.remove_from_favorites);
-                    hearticon.setVisibility(v.VISIBLE);
+                    setToRemoveFavorite();
+                    addFavorite();
                 }
                 else {
-                    favoritesButton.setText(R.string.add_to_favorites);
-                    hearticon.setVisibility(v.INVISIBLE);
+                    setToAddFavorite();
+                    removeFavorite();
                 }
-
             }
         });
+    }
 
+    private void addFavorite() {
+        new insertFavorite().execute(movieId);
+    }
+
+    private void removeFavorite() {
+        new deleteFavorite().execute(movieId);
+    }
+
+    private void checkFavorite() {
+        new getFavorite().execute(movieId);
+    }
+
+    private void setToAddFavorite() {
+        favoritesButton.setText(R.string.add_to_favorites);
+        hearticon.setVisibility(View.INVISIBLE);
+    }
+
+    private void setToRemoveFavorite() {
+        favoritesButton.setText(R.string.remove_from_favorites);
+        hearticon.setVisibility(View.VISIBLE);
     }
 
     private void getTrailers(String movieid) {
@@ -181,14 +203,19 @@ public class MovieDetail extends AppCompatActivity {
         }
     }
 
-    public class getFavorite extends AsyncTask<String, Void, String> {
+    public class getFavorite extends AsyncTask<String, Void, Void> {
 
         @Override
-        protected String doInBackground(String... params) {
+        protected Void doInBackground(String... params) {
             String movieId = params[0];
             Favorite favoritefromDB = favoriteDatabase.daoAccess () . fetchFavoritesbyMovieId (movieId);
-            String movieIDFavorite = favoritefromDB.getMovieId();
-            return movieIDFavorite;
+            if(favoritefromDB == null){
+                setToAddFavorite();
+            }
+            else {
+                setToRemoveFavorite();
+            }
+            return null;
         }
     }
 }
