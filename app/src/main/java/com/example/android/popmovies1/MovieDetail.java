@@ -1,5 +1,6 @@
 package com.example.android.popmovies1;
 
+import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -10,8 +11,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.android.popmovies1.data.Favorite;
+import com.example.android.popmovies1.data.FavoriteDatabase;
 import com.example.android.popmovies1.data.Movie;
 
 import com.example.android.popmovies1.data.Review;
@@ -34,9 +39,14 @@ public class MovieDetail extends AppCompatActivity {
     private TextView errorMessageTrailer;
     private TrailersAdapter trailersAdapter;
     private ReviewsAdapter reviewsAdapter;
+    private Button favoritesButton;
+    private ImageView hearticon;
     private Trailer[] trailers;
     private Review[] reviews;
     private Context mContext;
+    private static final String DATABASE_NAME = "favoritesdb";
+    private FavoriteDatabase favoriteDatabase;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +68,13 @@ public class MovieDetail extends AppCompatActivity {
 
         errorMessageReview = findViewById(R.id.reviewerror);
 
+        favoritesButton = findViewById(R.id.button_favorite);
+        hearticon = findViewById(R.id.imageview_favorite);
+
+
+
+        favoriteDatabase = Room.databaseBuilder(getApplicationContext(), FavoriteDatabase.class, DATABASE_NAME).build();
+
         Intent intent = getIntent();
         Movie movie = intent.getParcelableExtra("movie");
         binding.setMovie(movie);
@@ -68,6 +85,26 @@ public class MovieDetail extends AppCompatActivity {
 
         getTrailers(String.valueOf(movie.getId()));
         getReviews(String.valueOf(movie.getId()));
+
+        favoritesButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Button b = (Button)v;
+                String buttonText = b.getText().toString();
+                buttonText = buttonText.replaceAll("\\n","");
+                buttonText = buttonText.toUpperCase();
+                if(buttonText.equals("ADD TO FAVORITES")) {
+                    favoritesButton.setText(R.string.remove_from_favorites);
+                    hearticon.setVisibility(v.VISIBLE);
+                }
+                else {
+                    favoritesButton.setText(R.string.add_to_favorites);
+                    hearticon.setVisibility(v.INVISIBLE);
+                }
+
+            }
+        });
 
     }
 
@@ -91,8 +128,6 @@ public class MovieDetail extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            Log.d("MovieID", String.valueOf(jsonstring));
-            Log.d("MovieURL", String.valueOf(searchUrl));
             return jsonstring;
         }
 
@@ -119,6 +154,41 @@ public class MovieDetail extends AppCompatActivity {
             } else {
                 errorMessageReview.setVisibility(View.VISIBLE);
             }
+        }
+    }
+
+    public class insertFavorite extends AsyncTask<String, Void, Void> {
+
+        @Override
+        protected Void doInBackground(String... params) {
+            String movieId = params[0];
+            Favorite favorite =new Favorite();
+            favorite.setMovieId(movieId);
+            favoriteDatabase.daoAccess () . insert (favorite);
+            return null;
+        }
+    }
+
+    public class deleteFavorite extends AsyncTask<String, Void, Void> {
+
+        @Override
+        protected Void doInBackground(String... params) {
+            String movieId = params[0];
+            Favorite favorite =new Favorite();
+            favorite.setMovieId(movieId);
+            favoriteDatabase.daoAccess () . deleteFavorite (favorite);
+            return null;
+        }
+    }
+
+    public class getFavorite extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+            String movieId = params[0];
+            Favorite favoritefromDB = favoriteDatabase.daoAccess () . fetchFavoritesbyMovieId (movieId);
+            String movieIDFavorite = favoritefromDB.getMovieId();
+            return movieIDFavorite;
         }
     }
 }

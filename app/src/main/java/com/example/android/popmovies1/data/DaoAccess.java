@@ -4,7 +4,8 @@ import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
-import android.arch.persistence.room.Update;
+
+import java.util.List;
 
 @Dao
 public interface DaoAccess {
@@ -13,7 +14,10 @@ public interface DaoAccess {
     void insert(Favorite favorite);
 
     @Query("SELECT * FROM Favorite WHERE movieId = :movieId")
-    Favorite fetchFavoritesbyMovieId (int movieId);
+    Favorite fetchFavoritesbyMovieId (String movieId);
+
+    @Query("SELECT * FROM Favorite ")
+    Favorite[] fetchAllFavorites ();
 
     @Delete
     void deleteFavorite (Favorite movies);
