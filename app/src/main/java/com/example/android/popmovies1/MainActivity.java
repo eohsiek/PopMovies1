@@ -174,6 +174,18 @@ public class MainActivity extends AppCompatActivity   implements MoviesAdapter.M
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putString("SORT", SORT);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        SORT = savedInstanceState.getString("SORT");
+    }
+
     public boolean isOnline() {
         ConnectivityManager connectivityManager =
                 (ConnectivityManager)mContext.getSystemService(Context.CONNECTIVITY_SERVICE);

@@ -2,6 +2,12 @@ package com.example.android.popmovies1.data;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Movie implements Parcelable {
     private String id;
@@ -142,7 +148,20 @@ public class Movie implements Parcelable {
     }
 
     public String getRelease_date() {
-        return release_date;
+        Log.i("datestring", release_date);
+        String formattedDate = release_date;
+        SimpleDateFormat parser = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+
+            Date date = parser.parse(formattedDate);
+            SimpleDateFormat formatter = new SimpleDateFormat("MMM dd, yyyy");
+            formattedDate = formatter.format(date);
+
+        } catch (ParseException e) {
+            //if the date doesn't parse, log issue but just return unformatted date string
+            e.printStackTrace();
+        }
+        return formattedDate;
     }
 
     // Setter Methods
