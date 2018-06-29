@@ -26,6 +26,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -74,9 +75,14 @@ public class MainActivity extends AppCompatActivity   implements MoviesAdapter.M
 
         loadingIndicator =  findViewById(R.id.loadingIndicator);
         getFavorites();
-
+        Log.i("Sort", SORT);
         if (isOnline()) {
-            getMovies(SORT);
+            if(SORT.equals("favorite")) {
+                filterFavorites();
+            }
+            else {
+                getMovies(SORT);
+            }
         } else {
             showErrorMessage();
         }
@@ -198,7 +204,7 @@ public class MainActivity extends AppCompatActivity   implements MoviesAdapter.M
         }
         if (id == R.id.action_favorites) {
             //default to previous sort
-            SORT = this.SORT;
+            SORT =  getResources().getString(R.string.sortvalue_favorite);
             filterFavorites();
             return true;
         }
