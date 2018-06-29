@@ -56,13 +56,14 @@ public class MainActivity extends AppCompatActivity   implements MoviesAdapter.M
     private Context mContext;
     private boolean filterFavorites;
 
-    private static String SORT = "popular";
+    private static String SORT;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         mContext = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        SORT = getResources().getString(R.string.sortvalue_popular);
 
         recyclerView = findViewById(R.id.recycleViewMovies);
         moviesAdapter = new MoviesAdapter(this);
