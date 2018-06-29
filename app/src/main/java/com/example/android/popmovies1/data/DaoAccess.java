@@ -1,5 +1,6 @@
 package com.example.android.popmovies1.data;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
@@ -14,10 +15,10 @@ public interface DaoAccess {
     void insert(Favorite favorite);
 
     @Query("SELECT * FROM Favorite WHERE movieId = :movieId")
-    Favorite fetchFavoritesbyMovieId (String movieId);
+    LiveData<Favorite> fetchFavoritesbyMovieId (String movieId);
 
     @Query("SELECT * FROM Favorite ")
-    List<Favorite> fetchAllFavorites ();
+    LiveData<List<Favorite>> fetchAllFavorites ();
 
     @Delete
     void deleteFavorite (Favorite favorite);

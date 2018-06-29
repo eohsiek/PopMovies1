@@ -1,10 +1,13 @@
 package com.example.android.popmovies1;
 
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.Observer;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.AsyncTask;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -77,7 +80,6 @@ public class MovieDetail extends AppCompatActivity  {
         favoritesButton = findViewById(R.id.button_favorite);
         hearticon = findViewById(R.id.imageview_favorite);
 
-        //favoriteDatabase = Room.databaseBuilder(getApplicationContext(), FavoriteDatabase.class, DATABASE_NAME).build();
         favoriteDatabase = FavoriteDatabase.getDatabase(getApplicationContext());
 
         Intent intent = getIntent();
@@ -85,7 +87,7 @@ public class MovieDetail extends AppCompatActivity  {
         movieId = movie.getId();
         binding.setMovie(movie);
 
-        checkFavorite();
+        checkFavorite(movieId);
 
         Picasso.with(this).load(movie.getPosterURI()).placeholder(R.drawable.placeholder).error(R.drawable.notfound).into(binding.imageviewMoviePoster);
         Picasso.with(this).load(movie.getBackdropURI()).placeholder(R.drawable.placeholder).error(R.drawable.notfound).into(binding.imageviewBackdrop);
@@ -137,8 +139,20 @@ public class MovieDetail extends AppCompatActivity  {
         });
     }
 
-    private void checkFavorite() {
-        new getFavorite().execute(movieId);
+    private void checkFavorite(String movieId) {
+        final LiveData<Favorite> favoriteLiveData = favoriteDatabase.daoAccess().fetchFavoritesbyMovieId(movieId);
+        favoriteLiveData.observe(this, new Observer<Favorite>() {
+            @Override
+            public void onChanged(@Nullable Favorite favorite) {
+                if(favorite == null){
+                    setToAddFavorite();
+                }
+                else {
+                    setToRemoveFavorite();
+                }
+            }
+        });
+
     }
 
     private void setToAddFavorite() {
@@ -197,46 +211,6 @@ public class MovieDetail extends AppCompatActivity  {
             } else {
                 errorMessageReview.setVisibility(View.VISIBLE);
             }
-        }
-    }
-/*
-    public class insertFavorite extends AsyncTask<String, Void, Void> {
-
-        @Override
-        protected Void doInBackground(String... params) {
-            String movieId = params[0];
-            Favorite favorite =new Favorite();
-            favorite.setMovieId(movieId);
-            favoriteDatabase.daoAccess().insert(favorite);
-            return null;
-        }
-    }
-
-    public class deleteFavorite extends AsyncTask<String, Void, Void> {
-
-        @Override
-        protected Void doInBackground(String... params) {
-            String movieId = params[0];
-            Favorite favorite =new Favorite();
-            favorite.setMovieId(movieId);
-            favoriteDatabase.daoAccess () . deleteFavorite (favorite);
-            return null;
-        }
-    }
-*/
-    public class getFavorite extends AsyncTask<String, Void, Void> {
-
-        @Override
-        protected Void doInBackground(String... params) {
-            String movieId = params[0];
-            Favorite favoritefromDB = favoriteDatabase.daoAccess () . fetchFavoritesbyMovieId (movieId);
-            if(favoritefromDB == null){
-                setToAddFavorite();
-            }
-            else {
-                setToRemoveFavorite();
-            }
-            return null;
         }
     }
 }
