@@ -117,6 +117,10 @@ public class MovieDetail extends AppCompatActivity  {
         favorite.setMovieId(movie.getId());
         favorite.setTitle(movie.getTitle());
         favorite.setPoster_path(movie.getPoster_path());
+        favorite.setBackdrop_path(movie.getBackdrop_path());
+        favorite.setOverview(movie.getOverview());
+        favorite.setRelease_date(movie.getRelease_date());
+        favorite.setVote_average(movie.getVote_average());
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {

@@ -4,6 +4,7 @@
     <string name="sort_default">popular</string>
     <string name="sortvalue_popular">popular</string>
     <string name="sortvalue_rating">top_rated</string>
+    <string name="sortvalue_favorite">favorite</string>
     <string name="sort_popular">Sort by Popularity</string>
     <string name="sort_rating">Sort by Rating</string>
 
