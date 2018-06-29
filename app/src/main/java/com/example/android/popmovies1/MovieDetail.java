@@ -116,6 +116,7 @@ public class MovieDetail extends AppCompatActivity  {
         final Favorite favorite = new Favorite();
         favorite.setMovieId(movie.getId());
         favorite.setTitle(movie.getTitle());
+        favorite.setPoster_path(movie.getPoster_path());
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {
@@ -127,7 +128,6 @@ public class MovieDetail extends AppCompatActivity  {
     private void removeFavorite() {
         final Favorite favorite = new Favorite();
         favorite.setMovieId(movie.getId());
-        favorite.setTitle(movie.getTitle());
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {

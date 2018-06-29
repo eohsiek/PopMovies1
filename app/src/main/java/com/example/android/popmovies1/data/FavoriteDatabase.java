@@ -17,6 +17,8 @@ public abstract class FavoriteDatabase extends RoomDatabase {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             FavoriteDatabase.class, "favoritedb")
+                            //temporary solution to deal with db changes during development
+                            .fallbackToDestructiveMigration()
                             .build();
                 }
             }

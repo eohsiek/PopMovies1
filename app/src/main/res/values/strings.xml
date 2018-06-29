@@ -22,4 +22,5 @@
     <string name="add_to_favorites">Add to \nFavorites</string>
     <string name="remove_from_favorites">Remove from \nFavorites</string>
     <string name="show_only_favorites">Show Only Favorites</string>
+    <string name="no_favorites_selected_yet">No Favorites Selected Yet</string>
 </resources>

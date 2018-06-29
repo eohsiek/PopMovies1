@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity   implements MoviesAdapter.M
     private ProgressBar loadingIndicator;
     private Movie[] movies;
     private Context mContext;
+    private boolean filterFavorites;
 
     private static String SORT = "popular";
 
@@ -72,6 +73,7 @@ public class MainActivity extends AppCompatActivity   implements MoviesAdapter.M
         errorMessage.setText(getResources().getText(R.string.error_message));
 
         loadingIndicator =  findViewById(R.id.loadingIndicator);
+        getFavorites();
 
         if (isOnline()) {
             getMovies(SORT);
@@ -83,7 +85,7 @@ public class MainActivity extends AppCompatActivity   implements MoviesAdapter.M
     private void getMovies(String sort) {
         URL movieURL = NetworkUtils.buildUrl(sort);
         new GetPopularMoviesTask().execute(movieURL);
-        getFavorites();
+
     }
 
     @Override
@@ -92,6 +94,7 @@ public class MainActivity extends AppCompatActivity   implements MoviesAdapter.M
         intent.putExtra("movie", movie);
         startActivity(intent);
     }
+
 
     public class GetPopularMoviesTask extends AsyncTask<URL, Void, String> {
 
@@ -138,6 +141,30 @@ public class MainActivity extends AppCompatActivity   implements MoviesAdapter.M
         });
     }
 
+    private void filterFavorites() {
+        MainViewModel viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        viewModel.getFavorites().observe(this, new Observer<List<Favorite>>() {
+            @Override
+            public void onChanged(@Nullable List<Favorite> favorites) {
+                Movie[] movieArray = new Movie[favorites.size()];
+                int i = 0;
+                for (Favorite favorite : favorites) {
+                    movieArray[i] = favorite.convertToMovieObject();
+                    i++;
+                }
+                if(movieArray.length > 0) {
+                    moviesAdapter.setMovieData(mContext, movieArray);
+                    moviesAdapter.setFavoritesData(favorites);
+                    showMovies();
+                }
+                else {
+                    errorMessage.setText(getResources().getText(R.string.no_favorites_selected_yet));
+                    showErrorMessage();
+                }
+            }
+        });
+    }
+
     private  void showMovies() {
         errorMessage.setVisibility(View.INVISIBLE);
         recyclerView.setVisibility(View.VISIBLE);
@@ -162,15 +189,20 @@ public class MainActivity extends AppCompatActivity   implements MoviesAdapter.M
         if (id == R.id.action_sortpopular) {
             SORT = getResources().getString(R.string.sortvalue_popular);
             getMovies(SORT);
-            getFavorites();
             return true;
         }
         if (id == R.id.action_sortrating) {
             SORT =  getResources().getString(R.string.sortvalue_rating);
             getMovies(SORT);
-            getFavorites();
             return true;
         }
+        if (id == R.id.action_favorites) {
+            //default to previous sort
+            SORT = this.SORT;
+            filterFavorites();
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
