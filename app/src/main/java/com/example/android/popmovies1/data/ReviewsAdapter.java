@@ -53,7 +53,6 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewsA
     @Override
     public void onBindViewHolder(ReviewsAdapterViewHolder trailersAdapterViewHolder, int position) {
         Review review = reviews[position];
-        Log.d("ReviewObject", String.valueOf(review));
         trailersAdapterViewHolder.bind(review);
     }
 

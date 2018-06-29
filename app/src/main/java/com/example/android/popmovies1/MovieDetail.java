@@ -48,6 +48,11 @@ public class MovieDetail extends AppCompatActivity  {
     private static final String DATABASE_NAME = "favoritesdb";
     private FavoriteDatabase favoriteDatabase;
     private String movieId;
+    private Movie movie;
+
+    public static final String EXTRA_FAVORITE_ID = "extraFavoriteId";
+    public static final String INSTANCE_FAVORITE_ID = "instanceFavoriteId";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,11 +77,11 @@ public class MovieDetail extends AppCompatActivity  {
         favoritesButton = findViewById(R.id.button_favorite);
         hearticon = findViewById(R.id.imageview_favorite);
 
-        favoriteDatabase = Room.databaseBuilder(getApplicationContext(), FavoriteDatabase.class, DATABASE_NAME).build();
-
+        //favoriteDatabase = Room.databaseBuilder(getApplicationContext(), FavoriteDatabase.class, DATABASE_NAME).build();
+        favoriteDatabase = FavoriteDatabase.getDatabase(getApplicationContext());
 
         Intent intent = getIntent();
-        Movie movie = intent.getParcelableExtra("movie");
+        movie = intent.getParcelableExtra("movie");
         movieId = movie.getId();
         binding.setMovie(movie);
 
@@ -109,11 +114,27 @@ public class MovieDetail extends AppCompatActivity  {
     }
 
     private void addFavorite() {
-        new insertFavorite().execute(movieId);
+        final Favorite favorite = new Favorite();
+        favorite.setMovieId(movie.getId());
+        favorite.setTitle(movie.getTitle());
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                favoriteDatabase.daoAccess().insert(favorite);
+            }
+        });
     }
 
     private void removeFavorite() {
-        new deleteFavorite().execute(movieId);
+        final Favorite favorite = new Favorite();
+        favorite.setMovieId(movie.getId());
+        favorite.setTitle(movie.getTitle());
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                favoriteDatabase.daoAccess().deleteFavorite(favorite);
+            }
+        });
     }
 
     private void checkFavorite() {
@@ -178,7 +199,7 @@ public class MovieDetail extends AppCompatActivity  {
             }
         }
     }
-
+/*
     public class insertFavorite extends AsyncTask<String, Void, Void> {
 
         @Override
@@ -186,7 +207,7 @@ public class MovieDetail extends AppCompatActivity  {
             String movieId = params[0];
             Favorite favorite =new Favorite();
             favorite.setMovieId(movieId);
-            favoriteDatabase.daoAccess () . insert (favorite);
+            favoriteDatabase.daoAccess().insert(favorite);
             return null;
         }
     }
@@ -202,7 +223,7 @@ public class MovieDetail extends AppCompatActivity  {
             return null;
         }
     }
-
+*/
     public class getFavorite extends AsyncTask<String, Void, Void> {
 
         @Override

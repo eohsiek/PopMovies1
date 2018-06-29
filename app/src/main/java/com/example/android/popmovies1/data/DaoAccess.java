@@ -17,8 +17,8 @@ public interface DaoAccess {
     Favorite fetchFavoritesbyMovieId (String movieId);
 
     @Query("SELECT * FROM Favorite ")
-    Favorite[] fetchAllFavorites ();
+    List<Favorite> fetchAllFavorites ();
 
     @Delete
-    void deleteFavorite (Favorite movies);
+    void deleteFavorite (Favorite favorite);
 }

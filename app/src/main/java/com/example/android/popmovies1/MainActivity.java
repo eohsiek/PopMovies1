@@ -3,6 +3,8 @@ App Icon from
 https://www.iconfinder.com/icons/1055062/film_film_reel_movie_reel_icon#size=128
 Heart Icon from
 http://www.iconarchive.com/show/free-valentine-heart-icons-by-designbolts/Heart-icon.html
+AppExecutor from
+https://github.com/udacity/ud851-Exercises/blob/student/Lesson09b
  */
 
 package com.example.android.popmovies1;
