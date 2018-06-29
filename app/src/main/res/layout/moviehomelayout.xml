@@ -13,7 +13,7 @@
         android:scaleType="centerCrop" />
 
     <ImageView
-        android:id="@+id/imageview_favorite"
+        android:id="@+id/imageview_favoriteheart"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_alignParentStart="true"

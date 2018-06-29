@@ -36,8 +36,6 @@ public class NetworkUtils {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-        Log.d("myTag", String.valueOf(url));
-
         return url;
     }
 
@@ -54,8 +52,6 @@ public class NetworkUtils {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-        Log.d("movieURL", String.valueOf(url));
-
         return url;
     }
 

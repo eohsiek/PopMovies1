@@ -53,7 +53,6 @@ public class MainActivity extends AppCompatActivity   implements MoviesAdapter.M
     private ProgressBar loadingIndicator;
     private Movie[] movies;
     private Context mContext;
-    private FavoriteDatabase favoriteDatabase;
 
     private static String SORT = "popular";
 
@@ -76,7 +75,6 @@ public class MainActivity extends AppCompatActivity   implements MoviesAdapter.M
 
         if (isOnline()) {
             getMovies(SORT);
-            getFavorites();
         } else {
             showErrorMessage();
         }
@@ -85,6 +83,7 @@ public class MainActivity extends AppCompatActivity   implements MoviesAdapter.M
     private void getMovies(String sort) {
         URL movieURL = NetworkUtils.buildUrl(sort);
         new GetPopularMoviesTask().execute(movieURL);
+        getFavorites();
     }
 
     @Override
@@ -120,7 +119,7 @@ public class MainActivity extends AppCompatActivity   implements MoviesAdapter.M
             if (movieResults != null && !movieResults.equals("")) {
                 movies = JsonUtils.parseMovieJson(movieResults);
                 moviesAdapter.setMovieData(mContext, movies);
-                showMovies(movies);
+                showMovies();
 
             } else {
                 showErrorMessage();
@@ -139,7 +138,7 @@ public class MainActivity extends AppCompatActivity   implements MoviesAdapter.M
         });
     }
 
-    private  void showMovies(final Movie[] movies) {
+    private  void showMovies() {
         errorMessage.setVisibility(View.INVISIBLE);
         recyclerView.setVisibility(View.VISIBLE);
     }
@@ -163,26 +162,16 @@ public class MainActivity extends AppCompatActivity   implements MoviesAdapter.M
         if (id == R.id.action_sortpopular) {
             SORT = getResources().getString(R.string.sortvalue_popular);
             getMovies(SORT);
+            getFavorites();
             return true;
         }
         if (id == R.id.action_sortrating) {
             SORT =  getResources().getString(R.string.sortvalue_rating);
             getMovies(SORT);
+            getFavorites();
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        outState.putString("SORT", SORT);
-        super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        SORT = savedInstanceState.getString("SORT");
     }
 
     public boolean isOnline() {

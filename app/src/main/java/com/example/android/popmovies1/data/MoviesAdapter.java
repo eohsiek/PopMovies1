@@ -34,12 +34,12 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesAdap
     public class MoviesAdapterViewHolder extends RecyclerView.ViewHolder  implements View.OnClickListener {
 
         public final ImageView moviePoster;
-        public final ImageView favorite;
+        public final ImageView favoriteheart;
 
         public MoviesAdapterViewHolder(View view) {
             super(view);
             moviePoster = (ImageView) view.findViewById(R.id.imageview_movie_poster);
-            favorite = (ImageView) view.findViewById(R.id.imageview_favorite);
+            favoriteheart = (ImageView) view.findViewById(R.id.imageview_favoriteheart);
             view.setOnClickListener(this);
         }
 
@@ -64,17 +64,17 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesAdap
 
     @Override
     public void onBindViewHolder(MoviesAdapterViewHolder moviesAdapterViewHolder, int position) {
+        moviesAdapterViewHolder.favoriteheart.setVisibility(View.INVISIBLE);
         Movie movie = movies[position];
-        for(Favorite favorite : favorites) {
-            if(favorite.getMovieId().equals(movie.getId())) {
-                moviesAdapterViewHolder.favorite.setVisibility(View.VISIBLE);
-                Log.i("isFavorite", "yes");
+        Picasso.with(mContext).load(movie.getPosterURI()).placeholder(R.drawable.placeholder).error(R.drawable.notfound).into(moviesAdapterViewHolder.moviePoster);
+        if(this.favorites != null) {
+            for (Favorite favorite : favorites) {
+                if (favorite.getMovieId().equals(movie.getId())) {
+                    moviesAdapterViewHolder.favoriteheart.setVisibility(View.VISIBLE);
+                }
             }
         }
-        Log.i("movieid", movie.getId());
-        Log.i("favoriteid", this.favorites.get(0).getMovieId());
 
-        Picasso.with(mContext).load(movie.getPosterURI()).placeholder(R.drawable.placeholder).error(R.drawable.notfound).into(moviesAdapterViewHolder.moviePoster);
     }
 
     @Override
