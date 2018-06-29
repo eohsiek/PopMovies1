@@ -1,14 +1,20 @@
 /*
+Credits:
+
 App Icon from
 https://www.iconfinder.com/icons/1055062/film_film_reel_movie_reel_icon#size=128
+
 Heart Icon from
 http://www.iconarchive.com/show/free-valentine-heart-icons-by-designbolts/Heart-icon.html
+
 AppExecutor from
-https://github.com/udacity/ud851-Exercises/blob/student/Lesson09b
+https://github.com/udacity/ud851-Exercises/blob/student/Lesson09b project
  */
 
 package com.example.android.popmovies1;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,6 +22,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -26,6 +33,8 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.android.popmovies1.data.Favorite;
+import com.example.android.popmovies1.data.FavoriteDatabase;
 import com.example.android.popmovies1.data.Movie;
 import com.example.android.popmovies1.data.MoviesAdapter;
 import com.example.android.popmovies1.utilities.JsonUtils;
@@ -33,6 +42,7 @@ import com.example.android.popmovies1.utilities.NetworkUtils;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity   implements MoviesAdapter.MoviesAdapterOnClickHandler {
@@ -43,6 +53,7 @@ public class MainActivity extends AppCompatActivity   implements MoviesAdapter.M
     private ProgressBar loadingIndicator;
     private Movie[] movies;
     private Context mContext;
+    private FavoriteDatabase favoriteDatabase;
 
     private static String SORT = "popular";
 
@@ -51,7 +62,6 @@ public class MainActivity extends AppCompatActivity   implements MoviesAdapter.M
         mContext = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         recyclerView = findViewById(R.id.recycleViewMovies);
         moviesAdapter = new MoviesAdapter(this);
@@ -66,6 +76,7 @@ public class MainActivity extends AppCompatActivity   implements MoviesAdapter.M
 
         if (isOnline()) {
             getMovies(SORT);
+            getFavorites();
         } else {
             showErrorMessage();
         }
@@ -116,6 +127,16 @@ public class MainActivity extends AppCompatActivity   implements MoviesAdapter.M
             }
         }
 
+    }
+
+    private void getFavorites() {
+        MainViewModel viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        viewModel.getFavorites().observe(this, new Observer<List<Favorite>>() {
+            @Override
+            public void onChanged(@Nullable List<Favorite> favorites) {
+                moviesAdapter.setFavoritesData(favorites);
+            }
+        });
     }
 
     private  void showMovies(final Movie[] movies) {

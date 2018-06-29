@@ -17,7 +17,7 @@ public class MainViewModel extends AndroidViewModel{
         FavoriteDatabase database = FavoriteDatabase.getDatabase(this.getApplication());
         favorites = database.daoAccess().fetchAllFavorites();
     }
-    
+
     public LiveData<List<Favorite>> getFavorites() {
         return favorites;
     }
