@@ -7,21 +7,21 @@
 
     <ImageView
         android:id="@+id/imageview_movie_poster"
-        android:layout_width="215dp"
-        android:layout_height="300dp"
+        android:layout_width="@dimen/twofifteen"
+        android:layout_height="@dimen/threehundred"
         android:contentDescription="@string/movie_poster_content_desc"
         android:scaleType="centerCrop" />
 
     <ImageView
         android:id="@+id/imageview_favoriteheart"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="@dimen/fifty"
+        android:layout_height="@dimen/fifty"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="135dp"
-        android:layout_marginLeft="135dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginStart="@dimen/onethreefive"
+        android:layout_marginLeft="@dimen/onethreefive"
+        android:layout_marginTop="@dimen/five"
         android:contentDescription="@string/favorite"
         android:src="@drawable/heart"
         android:visibility="invisible" />

@@ -13,15 +13,15 @@
         android:id="@+id/errorMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="16dp"
+        android:padding="@dimen/sixteen"
         android:text="@string/error_message"
         android:textAppearance="@style/WhiteHeader"
         android:visibility="invisible" />
 
     <ProgressBar
         android:id="@+id/loadingIndicator"
-        android:layout_height="42dp"
-        android:layout_width="42dp"
+        android:layout_height="@dimen/fourtytwo"
+        android:layout_width="@dimen/fourtytwo"
         android:layout_gravity="center"
         android:visibility="invisible" />
 

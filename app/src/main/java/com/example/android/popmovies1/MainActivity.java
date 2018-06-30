@@ -17,11 +17,10 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
-import android.preference.PreferenceManager;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -35,7 +34,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.android.popmovies1.data.Favorite;
-import com.example.android.popmovies1.data.FavoriteDatabase;
 import com.example.android.popmovies1.data.Movie;
 import com.example.android.popmovies1.data.MoviesAdapter;
 import com.example.android.popmovies1.utilities.JsonUtils;
@@ -54,7 +52,8 @@ public class MainActivity extends AppCompatActivity   implements MoviesAdapter.M
     private ProgressBar loadingIndicator;
     private Movie[] movies;
     private Context mContext;
-    private boolean filterFavorites;
+    private static final String BUNDLE_RECYCLER_LAYOUT = "classname.recycler.layout";
+    private Parcelable savedRecyclerLayoutState;
 
     private static String SORT;
 
@@ -63,8 +62,9 @@ public class MainActivity extends AppCompatActivity   implements MoviesAdapter.M
         mContext = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        SORT = getResources().getString(R.string.sortvalue_popular);
-
+        if(SORT == null) {
+            SORT = getResources().getString(R.string.sortvalue_popular);
+        }
         recyclerView = findViewById(R.id.recycleViewMovies);
         moviesAdapter = new MoviesAdapter(this);
         recyclerView.setAdapter(moviesAdapter);
@@ -126,6 +126,9 @@ public class MainActivity extends AppCompatActivity   implements MoviesAdapter.M
         protected void onPostExecute(String movieResults) {
 
             loadingIndicator.setVisibility(View.INVISIBLE);
+            if(savedRecyclerLayoutState!=null){
+                recyclerView.getLayoutManager().onRestoreInstanceState(savedRecyclerLayoutState);
+            }
             if (movieResults != null && !movieResults.equals("")) {
                 movies = JsonUtils.parseMovieJson(movieResults);
                 moviesAdapter.setMovieData(mContext, movies);
@@ -215,13 +218,19 @@ public class MainActivity extends AppCompatActivity   implements MoviesAdapter.M
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState.putString("SORT", SORT);
         super.onSaveInstanceState(outState);
+        outState.putString("SORT", SORT);
+        outState.putParcelable(BUNDLE_RECYCLER_LAYOUT,
+                recyclerView.getLayoutManager().onSaveInstanceState());
+
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
+        if (savedInstanceState != null) {
+            savedRecyclerLayoutState = savedInstanceState.getParcelable(BUNDLE_RECYCLER_LAYOUT);
+        }
         SORT = savedInstanceState.getString("SORT");
     }
 

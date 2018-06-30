@@ -15,9 +15,9 @@
             android:id="@+id/textview_review_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
-            android:padding="16dp"
+            android:layout_marginBottom="@dimen/ten"
+            android:layout_marginTop="@dimen/ten"
+            android:padding="@dimen/sixteen"
             android:background="#becff7"
             android:text="@{review.content, default=@string/movie_overview_placeholder}"/>
 
